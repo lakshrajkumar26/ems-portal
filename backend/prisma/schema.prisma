@@ -1,0 +1,86 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+enum AttendanceStatus {
+  PRESENT
+  ABSENT
+  HALF_DAY
+  REMOTE
+}
+
+enum LeaveStatus {
+  Pending
+  Approved
+  Rejected
+}
+
+enum Role {
+  ADMIN
+  MANAGER
+  EMPLOYEE
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  email String @unique
+  password String 
+  role Role @default(EMPLOYEE) 
+  employeeId Int? @unique
+  employee Employee? @relation(fields: [employeeId],references:[id]) //cehck 
+  createdAt DateTime @default(now())
+
+}
+
+model Employee {
+  id Int @id @default(autoincrement())
+  name String 
+  department String 
+  contact String 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  attendance Attendance[]
+  leaves Leave[]
+  user User?
+
+  @@index([department])
+  @@map("employee")
+  
+}
+
+
+model Attendance {
+  id         Int              @id @default(autoincrement())
+  date       DateTime
+  status     AttendanceStatus
+  employeeId Int
+  employee   Employee         @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+
+  @@unique([employeeId, date])
+  @@index([employeeId, date])
+  @@map("attendance")
+}
+
+model Leave {
+  id         Int         @id @default(autoincrement())
+  startDate  DateTime
+  endDate    DateTime
+  reason     String
+  status     LeaveStatus  @default(Pending)
+  employeeId Int
+  employee   Employee     @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+
+  @@index([employeeId, startDate, endDate])
+  @@map("leaves")
+}
