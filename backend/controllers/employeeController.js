@@ -3,6 +3,7 @@ const Employee = require("../models/employee");
 const ApiError = require("../utils/ApiError");
 const { asyncHandler } = require("../utils/AsyncHandler");
 const { employeeCreateSchema } = require("../validators/employeeValidator");
+const bcrypt = require("bcrypt");
 /**
  * @desc    Get all employees
  * @route   GET /api/employee
@@ -100,8 +101,11 @@ const createEmployee = async (req, res, next) => {
   console.log(validatedData);
   const { name, email, phone, password, position, role } = validatedData;
 
+    const user = await Employee.findOne({ email });
+  if (user) {
+    throw new ApiError("User already Existed", 409);
+  }
   const hassPassword = await bcrypt.hash(password, 10);
-
   const newEmployee = await Employee.create({
     name,
     email,
@@ -114,13 +118,11 @@ const createEmployee = async (req, res, next) => {
   if (!newEmployee) {
     return next(new ApiError("employee not created"));
   }
-  const user = await Employee.findOne({ email });
-  if (user) {
-    throw new ApiError("User already Existed", 409);
-  }
+
+const {password:_ ,...dataWithoutPassword} = newEmployee.toObject();
   res
     .status(201)
-    .json({ message: "User Created", success: true, data: newEmployee });
+    .json({ message: "User Created", success: true, data: dataWithoutPassword });
 };
 
 module.exports = {
@@ -128,4 +130,5 @@ module.exports = {
   getEmployeeById,
   updateEmployee,
   deleteEmployee,
+  createEmployee
 };

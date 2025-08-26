@@ -8,8 +8,7 @@ const userRoutes = require("./routes/userRoute");
 const employeeRoutes = require("./routes/employeeRoute");
 require("dotenv").config();
 const errorHandler = require("./middleware/ErrorHandler.middleware");
-const { logout } = require("./controllers/userController");
-
+const attendanceRoute = require("./routes/attendaceRoute");
 const allowedOrigin = ["http://localhost:5173","*"];
 
 app.use(cors({
@@ -23,7 +22,7 @@ app.use(express.json());
 app.use("/api/auth",authRoutes);
 app.use("/api/user",userRoutes);
 app.use("/api/employee",employeeRoutes);
-
+app.use("/api/attendance",attendanceRoute);
 
 app.get("/",(_,res) => {
     res.send("hi come here")

@@ -10,6 +10,11 @@ const attendanceSchema = new mongoose.Schema(
     date: {
       type: Date,
       required: true,
+      default: () => {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        return today;
+      },
     },
     status: {
       type: String,
