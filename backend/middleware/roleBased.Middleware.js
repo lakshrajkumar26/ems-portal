@@ -1,7 +1,7 @@
 const { asyncHandler } = require("../utils/AsyncHandler");
 
 //take a funtion and return a function 
-const roleVerify = (...allowedRoles) => {
+const verifyRole = (...allowedRoles) => {
   return asyncHandler((req, res, next) => {
     const { role } = req.user;
 
@@ -13,4 +13,4 @@ const roleVerify = (...allowedRoles) => {
   });
 };
 
-module.exports = { roleVerify };
+module.exports = {verifyRole };

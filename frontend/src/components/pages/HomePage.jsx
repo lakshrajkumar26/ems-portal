@@ -1,186 +1,88 @@
-// src/pages/Home.jsx
-import React from "react";
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Button,
-  Container,
-  Grid,
-  Card,
-  CardContent,
-  Box,
-} from "@mui/material";
-import { People, AccessTime, Work, Security } from "@mui/icons-material";
+// src/pages/HomePage.jsx
+import React, { useState, useEffect } from "react";
 
-export default function Home() {
+// Theme Toggle Component
+function ThemeToggle() {
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+
+  useEffect(() => {
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
   return (
-    <Box sx={{ backgroundColor: "#f9fafc", minHeight: "100vh" }}>
-      {/* Navbar */}
-      <AppBar position="static" color="primary" sx={{ mb: 4 }}>
-        <Toolbar>
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            Company EMS
-          </Typography>
-          <Button color="inherit">Login</Button>
-          <Button variant="outlined" color="inherit" sx={{ ml: 2 }}>
-            Sign Up
-          </Button>
-        </Toolbar>
-      </AppBar>
+    <button
+      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+      className="px-3 py-1 rounded-lg border border-gray-400 dark:border-gray-600 text-sm hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+    >
+      {theme === "dark" ? "🌙 Dark" : "☀️ Light"}
+    </button>
+  );
+}
 
-      {/* Hero Section */}
-      <Box
-        sx={{
-          textAlign: "center",
-          py: 8,
-          background: "linear-gradient(to right, #1976d2, #0d47a1)",
-          color: "white",
-        }}
-      >
-        <Typography variant="h3" gutterBottom fontWeight="bold">
-          Welcome to Company EMS Portal
-        </Typography>
-        <Typography variant="h6" sx={{ maxWidth: "700px", mx: "auto", mb: 3 }}>
-          Streamline employee management, track attendance, and boost
-          productivity — all in one place.
-        </Typography>
-        <Button
-          variant="contained"
-          color="secondary"
-          size="large"
-          sx={{ px: 4, py: 1.5 }}
-        >
-          Get Started
-        </Button>
-      </Box>
+export default function HomePage() {
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 text-gray-900 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 dark:text-white flex flex-col">
+     
+      <section className="flex-1 flex flex-col items-center justify-center text-center px-6 py-16">
+        <h2 className="text-4xl sm:text-5xl font-extrabold mb-4">
+          Learn & Share Skills Easily
+        </h2>
+        <p className="max-w-2xl text-gray-600 dark:text-gray-400 mb-6">
+          Connect with people around the world, exchange skills, and grow your knowledge.  
+          Whether you’re a beginner or a pro, SwapSkills is the place to learn and share.
+        </p>
+        <div className="space-x-4">
+          <a
+            href="#register"
+            className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-lg transition"
+          >
+            Get Started
+          </a>
+          <a
+            href="#features"
+            className="px-6 py-3 bg-gray-300 hover:bg-gray-400 text-gray-900 rounded-lg shadow-lg transition dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600"
+          >
+            Learn More
+          </a>
+        </div>
+      </section>
 
       {/* Features Section */}
-      <Container sx={{ py: 8 }}>
-        <Typography
-          variant="h4"
-          align="center"
-          gutterBottom
-          fontWeight="bold"
-        >
-          Key Features
-        </Typography>
-        <Grid container spacing={4} sx={{ mt: 3 }}>
-          {[
-            {
-              icon: <People fontSize="large" color="primary" />,
-              title: "Employee Directory",
-              desc: "Centralized employee database with quick access.",
-            },
-            {
-              icon: <AccessTime fontSize="large" color="primary" />,
-              title: "Attendance Tracking",
-              desc: "Easy check-in/out with real-time insights.",
-            },
-            {
-              icon: <Work fontSize="large" color="primary" />,
-              title: "Leave Management",
-              desc: "Automated leave requests and approvals.",
-            },
-            {
-              icon: <Security fontSize="large" color="primary" />,
-              title: "Role-Based Access",
-              desc: "Secure data with admin, HR, and employee roles.",
-            },
-          ].map((feature, idx) => (
-            <Grid item xs={12} sm={6} md={3} key={idx}>
-              <Card
-                sx={{
-                  textAlign: "center",
-                  py: 4,
-                  boxShadow: 3,
-                  borderRadius: 3,
-                  transition: "0.3s",
-                  "&:hover": { boxShadow: 6 },
-                }}
-              >
-                <CardContent>
-                  <Box sx={{ mb: 2 }}>{feature.icon}</Box>
-                  <Typography variant="h6" gutterBottom>
-                    {feature.title}
-                  </Typography>
-                  <Typography color="text.secondary">{feature.desc}</Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
-      </Container>
+      <section id="features" className="px-6 py-16 bg-gray-50 dark:bg-gray-800">
+        <h3 className="text-3xl font-bold text-center mb-10">Why SwapSkills?</h3>
+        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="p-6 rounded-xl shadow-lg bg-white dark:bg-gray-900">
+            <h4 className="text-xl font-semibold mb-2">Skill Exchange</h4>
+            <p className="text-gray-600 dark:text-gray-400">
+              Teach what you know, and learn what you want from others in the community.
+            </p>
+          </div>
+          <div className="p-6 rounded-xl shadow-lg bg-white dark:bg-gray-900">
+            <h4 className="text-xl font-semibold mb-2">Global Community</h4>
+            <p className="text-gray-600 dark:text-gray-400">
+              Connect with learners and experts worldwide and build your network.
+            </p>
+          </div>
+          <div className="p-6 rounded-xl shadow-lg bg-white dark:bg-gray-900">
+            <h4 className="text-xl font-semibold mb-2">Flexible Learning</h4>
+            <p className="text-gray-600 dark:text-gray-400">
+              Learn at your own pace through sessions, chats, or video lessons.
+            </p>
+          </div>
+        </div>
+      </section>
 
-      {/* Quick Stats */}
-      <Box sx={{ py: 8, backgroundColor: "white" }}>
-        <Container>
-          <Typography
-            variant="h4"
-            align="center"
-            gutterBottom
-            fontWeight="bold"
-          >
-            Quick Stats
-          </Typography>
-          <Grid container spacing={4} sx={{ mt: 3 }}>
-            {[
-              { label: "Employees", value: "250+" },
-              { label: "Departments", value: "12" },
-              { label: "Active Projects", value: "35" },
-            ].map((stat, idx) => (
-              <Grid item xs={12} sm={4} key={idx}>
-                <Card
-                  sx={{
-                    textAlign: "center",
-                    py: 4,
-                    borderRadius: 3,
-                    boxShadow: 2,
-                  }}
-                >
-                  <CardContent>
-                    <Typography
-                      variant="h4"
-                      color="primary"
-                      fontWeight="bold"
-                    >
-                      {stat.value}
-                    </Typography>
-                    <Typography color="text.secondary">{stat.label}</Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Container>
-      </Box>
-
-      {/* CTA */}
-      <Box
-        sx={{
-          textAlign: "center",
-          py: 10,
-          background: "linear-gradient(to right, #0d47a1, #1976d2)",
-          color: "white",
-          mt: 6,
-        }}
-      >
-        <Typography variant="h4" gutterBottom fontWeight="bold">
-          Ready to Empower Your Workforce?
-        </Typography>
-        <Typography variant="h6" sx={{ maxWidth: "600px", mx: "auto", mb: 3 }}>
-          Get started today and manage employees, projects, and productivity in
-          one place.
-        </Typography>
-        <Button
-          variant="contained"
-          color="secondary"
-          size="large"
-          sx={{ px: 4, py: 1.5 }}
-        >
-          Explore Dashboard
-        </Button>
-      </Box>
-    </Box>
+      {/* Footer */}
+      <footer className="px-8 py-6 text-center border-t border-gray-300 dark:border-gray-700">
+        <p className="text-sm text-gray-600 dark:text-gray-400">
+          © {new Date().getFullYear()} SwapSkills. All rights reserved.
+        </p>
+      </footer>
+    </div>
   );
 }

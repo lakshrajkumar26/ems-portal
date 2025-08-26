@@ -4,16 +4,31 @@ const PORT = process.env.PORT || 8080
 const cors = require("cors");
 const db = require("./Config/db");
 const authRoutes = require("./routes/authRoute");
+const userRoutes = require("./routes/userRoute");
+const employeeRoutes = require("./routes/employeeRoute");
 require("dotenv").config();
 const errorHandler = require("./middleware/ErrorHandler.middleware");
+const { logout } = require("./controllers/userController");
+
+const allowedOrigin = ["http://localhost:5173","*"];
+
+app.use(cors({
+    origin:allowedOrigin,
+    methods: ["GET","POST"]
+}))
 
 app.use(express.json());
 
-app.use("/api/auth",authRoutes);
 
-app.get("/",(req,res) => {
+app.use("/api/auth",authRoutes);
+app.use("/api/user",userRoutes);
+app.use("/api/employee",employeeRoutes);
+
+
+app.get("/",(_,res) => {
     res.send("hi come here")
 })
+
 
 // Error handler should be last   global 
 app.use(errorHandler);

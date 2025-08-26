@@ -11,7 +11,7 @@ const exployeeSchema = new mongoose.Schema({
   phoneNumber: {
     type: String,
   },
-  position: {
+  designation: {
     type: String,
   },
   role: {
