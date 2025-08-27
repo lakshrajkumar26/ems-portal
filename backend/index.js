@@ -2,10 +2,11 @@ const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 8080
 const cors = require("cors");
-const db = require("./Config/db");
+const db = require("./Config/db");``
 const authRoutes = require("./routes/authRoute");
 const userRoutes = require("./routes/userRoute");
 const employeeRoutes = require("./routes/employeeRoute");
+const workAssignmentRoute = require("./routes/workAssignmentRoute");
 require("dotenv").config();
 const errorHandler = require("./middleware/ErrorHandler.middleware");
 const attendanceRoute = require("./routes/attendaceRoute");
@@ -18,11 +19,11 @@ app.use(cors({
 
 app.use(express.json());
 
-
 app.use("/api/auth",authRoutes);
 app.use("/api/user",userRoutes);
 app.use("/api/employee",employeeRoutes);
 app.use("/api/attendance",attendanceRoute);
+app.use("/api/workAssignment",workAssignmentRoute);
 
 app.get("/",(_,res) => {
     res.send("hi come here")

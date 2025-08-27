@@ -6,7 +6,7 @@ const employeeCreateSchema = z.object({
   phone: z.string().optional(),
   position: z.string().optional(),
   role: z.enum(["admin", "employee"]).default("employee"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
+  password: z.string().min(6, "Password must be at least 6 characters").trim(),
   dateOfJoining: z.string().optional(),
   status: z.enum(["active", "inactive"]).optional(),
 })
@@ -17,7 +17,7 @@ const updateEmployeeSchema = z.object({
   phoneNumber: z.string().min(10).optional(),
   position: z.string().optional(),
   role: z.enum(["admin", "employee"]).optional(),
-  password: z.string().min(6).optional(),
+  password: z.string().min(6).trim().optional(),
   dateOfJoining: z.string().optional(),
   status: z.enum(["active", "inactive"]).optional(),
 });

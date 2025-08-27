@@ -37,15 +37,16 @@ const checkOut = asyncHandler(async (req, res, next) => {
 
   const today = new Date().setHours(0, 0, 0, 0);
 
-  const attendance = await Attendance.findOne({
-    employee: userId,
-    date: { $gte: today },
-  });
+const attendance = await Attendance.findOne(
+    {
+      employee :userId,
+      date : {$gte : today}
+    }).populate({ path:"employee",select:"-role -status -position"})
   if (!attendance) {
     return next(new ApiError("no check-in found for today", 400));
   }
-  attendance.checkOutTime = new Date();
-  await attendance.save();
+//   attendance.checkOutTime = new Date();
+//   await attendance.save();
 
   res.status(200).json({
     success: true,
@@ -60,25 +61,27 @@ const checkOut = asyncHandler(async (req, res, next) => {
 const getAttendaceByEmployee = asyncHandler(async (req, res, next) => {
   const { employeeId } = req.params;
 
-  const records = await Attendance.findById(employeeId);
+  const records = await Attendance.findOne({
+    employee : employeeId
+  }).populate({ path:"employee" , select : "-createdAt -updatedAt"});
 
-//   if (!records) {
-//     return next(new ApiError(`no records found for UserId :${employeeId} `));
-//   }
+    if (!records) {
+      return next(new ApiError(`no records found for UserId :${employeeId} `));
+    }
+
+  res.status(200).json({
+    message: "records found",
+    success: true,
+    data: records,
+    count: records?.length,
+  });
+});
+const getAllAttendace = asyncHandler(async (req, res, next) => {
+  const attendance = await Attendance.find();
 
   res
     .status(200)
-    .json({
-      message: "records found",
-      success: true,
-      data: records,
-      count: records?.length,
-    });
+    .json({ message: "Records found", success: true, data: attendance });
 });
-const getAllAttendace = asyncHandler( async(req,res,next)=>{
-    const attendance = await Attendance.find();
 
-    res.status(200).json({message : "Records found",success : true , data : attendance});
-})
-
-module.exports = { checkIn, checkOut, getAttendaceByEmployee,getAllAttendace };
+module.exports = { checkIn, checkOut, getAttendaceByEmployee, getAllAttendace };

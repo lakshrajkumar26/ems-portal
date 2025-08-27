@@ -29,6 +29,10 @@ const workSchema = new mongoose.Schema(
     completedAt: {
       type: Date,
     },
+    priority: {
+      type: String,
+      default : "Medium"
+    },
   },
   { timestamps: true }
 );
