@@ -1,17 +1,24 @@
 const router = require("express").Router();
-
 const {
-  checkIn,
-  checkOut,
-  getAttendaceByEmployee,
-  getAllAttendace,
-} = require("./../controllers/attendanceController");
+ applyLeave,
+ getAllLeaves,
+ getLeavesById,
+approveLeave,
+rejectLeave,
+deleteLeave,
+EditLeave
+} = require("./../controllers/leaveController");
 const { verifyJWT } = require("./../middleware/auth.Middleware");
 
 router.use(verifyJWT);
 
-router.post("/checkin", checkIn);
-router.post("/checkout", checkOut);
-router.get("/:employeeId", getAttendaceByEmployee);
-router.get("/", getAllAttendace);
+router.post("/applyleave", applyLeave);
+router.post("/editleave/:leaveid", EditLeave);
+router.get("/leaves", getAllLeaves);
+router.get("/:leaveid", getLeavesById);
+router.post("/approved/:leaveid", approveLeave);
+router.post("/reject/:leaveid", rejectLeave);
+router.delete("/deleteleave/:leaveid", deleteLeave);
+
+
 module.exports = router;

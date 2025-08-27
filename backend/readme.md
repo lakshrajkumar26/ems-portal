@@ -35,6 +35,8 @@
 # GET    /api/leaves/:id           → Get leave details
 # PUT    /api/leaves/:id/approve   → Approve leave (Admin/HR)
 # PUT    /api/leaves/:id/reject    → Reject leave (Admin/HR)
+# DELETE /api/leave/:id            → Delete leave (left)  
+# POST   /api/leave/:id            → update leave (left)  
 
 6. Payroll (Optional)
 # GET    /api/payroll              → Get all payroll data (Admin/HR)

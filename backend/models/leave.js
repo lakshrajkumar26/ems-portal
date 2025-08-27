@@ -17,4 +17,5 @@ const leaveSchema = new mongoose.Schema({
   appliedAt: { type: Date, default: Date.now }
 }, { timestamps: true });
 
-module.exports = mongoose.model("Leave", leaveSchema);
+const Leave = mongoose.model("Leave", leaveSchema);
+module.exports =  Leave;

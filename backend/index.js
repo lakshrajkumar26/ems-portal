@@ -7,6 +7,7 @@ const authRoutes = require("./routes/authRoute");
 const userRoutes = require("./routes/userRoute");
 const employeeRoutes = require("./routes/employeeRoute");
 const workAssignmentRoute = require("./routes/workAssignmentRoute");
+const leaveRoute = require("./routes/leavesRoute");
 require("dotenv").config();
 const errorHandler = require("./middleware/ErrorHandler.middleware");
 const attendanceRoute = require("./routes/attendaceRoute");
@@ -24,6 +25,7 @@ app.use("/api/user",userRoutes);
 app.use("/api/employee",employeeRoutes);
 app.use("/api/attendance",attendanceRoute);
 app.use("/api/workAssignment",workAssignmentRoute);
+app.use("/api/leave",leaveRoute);
 
 app.get("/",(_,res) => {
     res.send("hi come here")
