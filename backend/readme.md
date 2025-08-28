@@ -30,13 +30,13 @@
 # GET    /api/attendance           → Get all attendance records (Admin/HR)
 
 5. Leave Management
-# POST   /api/leaves/apply         → Apply for leave (Employee)
+# POST   /api/leaves/apply         → Apply for leave (Employee) (edge cases) 
 # GET    /api/leaves               → Get all leave requests (Admin/HR)
 # GET    /api/leaves/:id           → Get leave details
 # PUT    /api/leaves/:id/approve   → Approve leave (Admin/HR)
 # PUT    /api/leaves/:id/reject    → Reject leave (Admin/HR)
-# DELETE /api/leave/:id            → Delete leave (left)  
-# POST   /api/leave/:id            → update leave (left)  
+# DELETE /api/leave/:id            → Delete leave 
+# POST   /api/leave/:id            → update leave  (edge cases) 
 
 6. Payroll (Optional)
 # GET    /api/payroll              → Get all payroll data (Admin/HR)

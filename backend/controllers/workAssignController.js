@@ -168,6 +168,33 @@ const updateAssignmentStatus = asyncHandler(async (req, res, next) => {
   });
 });
 
+const getPendingWorkAssignedToMe = asyncHandler(async (req, res, next) => {
+  const { userId } = req.user;
+
+  const work = await WorkAssign.findOne({
+    assignedTo: userId,
+    status: "pending",
+  });
+
+  if (!work) {
+    return next(new ApiError("no pending work found!", 404));
+  }
+
+  res.status(200).json({ message: "work found", success: true, data: work });
+});
+
+const getCompletedWorkAssignedToMe = asyncHandler(async (req, res, next) => {
+  const { userId } = req.user;
+
+  const work = await WorkAssign.findOne({
+    assignedTo: userId,
+    status: "completed",
+  });
+  if (!work) {
+    return next(new ApiError("no completed work found!", 404));
+  }
+  res.status(200).json({ message: "work found", success: true, data: work });
+});
 module.exports = {
   createWorkAssign,
   getAllAssignment,
@@ -175,4 +202,6 @@ module.exports = {
   updateAssignment,
   deleteAssignment,
   updateAssignmentStatus,
+  getPendingWorkAssignedToMe,
+  getCompletedWorkAssignedToMe
 };
