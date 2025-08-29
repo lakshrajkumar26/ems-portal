@@ -3,17 +3,17 @@ import React from "react";
 
 export default function Register() {
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
-      {/* Navbar */}
-      <header className="flex justify-between items-center px-8 py-4">
-        <h1 className="text-xl font-bold">SwapSkills</h1>
-        <nav className="space-x-6 text-sm">
-          <a href="#" className="hover:text-blue-400">Home</a>
-          <a href="#" className="hover:text-blue-400">About Us</a>
-          <a href="#" className="hover:text-blue-400">Register</a>
-          <a href="#" className="hover:text-blue-400">Login</a>
-        </nav>
-      </header>
+     <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
+     {/*  Navbar
+       <header className="flex justify-between items-center px-8 py-4">
+         <h1 className="text-xl font-bold">SwapSkills</h1>
+         <nav className="space-x-6 text-sm">
+         <a href="#" className="hover:text-blue-400">Home</a>
+           <a href="#" className="hover:text-blue-400">About Us</a>
+           <a href="#" className="hover:text-blue-400">Register</a>
+        <a href="#" className="hover:text-blue-400">Login</a>
+         </nav>
+       </header> */}
 
       {/* Register Section */}
       <div className="flex flex-1">
@@ -87,5 +87,6 @@ export default function Register() {
         </div>
       </div>
     </div>
+   
   );
 }

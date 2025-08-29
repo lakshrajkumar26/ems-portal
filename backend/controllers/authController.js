@@ -53,6 +53,7 @@ const login = asyncHandler(async (req, res, next) => {
   // const {password } = req.body;
   const validData = loginSchema.safeParse(req.body); //if parse needed try-cath || if safeParse not try-catch needed
   if (!validData.success) {
+      console.log(validData.error.format());
     return next(new ApiError("invalid Email"));
   }
   console.log(validData.data);

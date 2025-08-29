@@ -11,6 +11,7 @@ const leaveRoute = require("./routes/leavesRoute");
 require("dotenv").config();
 const errorHandler = require("./middleware/ErrorHandler.middleware");
 const attendanceRoute = require("./routes/attendaceRoute");
+
 const allowedOrigin = ["http://localhost:5173","*"];
 
 app.use(cors({
