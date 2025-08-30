@@ -1,8 +1,15 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ThemeToggle from "./ThemeToggle";
+import UserContext from "../store/UserContext";
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const { user, setUser } = useContext(UserContext);
+    const handleLogout = () => {
+    setUser(null); // remove user on logout
+    localStorage.removeItemItem("token");
+  };
 
   return (
     <>
@@ -13,12 +20,23 @@ function Navbar() {
             <Link to="/" className="hover:underline">
               Home
             </Link>
-            <Link to="/login" className="hover:underline">
-              Login
-            </Link>
-            <Link to="/register" className="hover:underline">
+           
+            {user ? (
+              <>
+                <span style={{ marginRight: "15px" }}>
+                  Welcome, {user.name}
+                </span>
+                <button onClick={handleLogout}>Logout</button>
+              </>
+            ) : (
+              <><Link to="/register" className="hover:underline">
               Register
             </Link>
+              <Link to="/login" className="hover:underline">
+              Login
+            </Link> </>
+            )}
+            
             <Link to="/about" className="hover:underline">
               About
             </Link>

@@ -1,16 +1,23 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import baseAPI from "../axiosApi/axiosApi";
+import UserContext from "../store/UserContext";
 
 const LoginPage = () => {
+
+  const {user,setUser} = useContext(UserContext);
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+
   const [message, setMessage] = useState(null);
   const [error, setError] = useState(null);
  const navigate = useNavigate();
+
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
@@ -23,7 +30,10 @@ const LoginPage = () => {
     try {
       const res = await baseAPI.post("/api/auth/login", formData);
       console.log(res);
+
       if (res?.data.success) setMessage(res?.data?.message);
+      setUser(res.data?.data)
+      //  console.log(res.data.data)
       const token = res.data?.token;
       const user = res.data?.data?._id;
       localStorage.setItem("token", token);

@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ThemeToggle from "../../layout/ThemeToggle";
+import { useNavigate } from "react-router-dom";
 
 const tabs = ["Attendance", "Payroll", "Assignment", "Leaves", "Employees", "Reports"];
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState("Attendance");
-
+ const Navigate = useNavigate();
+ const token = localStorage.getItem("token");
+ 
   return (
     <div className="flex h-screen bg-gray-100 dark:bg-gray-900">
       

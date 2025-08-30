@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -12,6 +12,8 @@ import HomePage from "./components/pages/HomePage";
 import DemoPage from "./components/pages/DemoPage";
 import LoginPageCenter from "./components/pages/LoginPageCenter";
 import Dashboard from "./components/pages/dashboard/Dashboard";
+import UserContext from "./components/store/UserContext";
+import ProtectedRoute from "./components/layout/ProtectedRoute";
 const RegisterPage = React.lazy(() =>
   import("./components/pages/RegisterPage")
 );
@@ -37,9 +39,24 @@ const App = () => {
   //   return null; // This component doesn't render anything
   // }
 
+  const [user, setUser] = useState(() => {
+    const savedUser = localStorage.getItem("user");
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
+
+  useEffect(() => {
+    if (user) {
+      console.log(user.name);
+      localStorage.setItem("user", JSON.stringify(user));
+    } else {
+      localStorage.removeItem("user");
+    }
+  }, [user]);
+
   return (
-    <Router>
-      {/* Flex layout wrapper */}
+    <UserContext.Provider value={{ user, setUser }}>
+      <Router>
+        {/* Flex layout wrapper */}
         {/* Navbar has fixed height (h-14) */}
         <Navbar />
         <main className="min-h-[calc(100vh-56px)] bg-gray-100 dark:bg-gray-900">
@@ -49,12 +66,21 @@ const App = () => {
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/login" element={<Login />} />
               <Route path="/login2" element={<LoginPageCenter />} />
-              <Route path="/dashboard" element={<Dashboard />} />
+
+              <Route
+                path="/dashboard"
+                element={
+                  <ProtectedRoute>
+                    <Dashboard />{" "}
+                  </ProtectedRoute>
+                }
+              />
             </Routes>
           </Suspense>
-       </main>
-      {/* <DemoPage fn={printHello}/> */}
-    </Router>
+        </main>
+        {/* <DemoPage fn={printHello}/> */}
+      </Router>
+    </UserContext.Provider>
   );
 };
 
